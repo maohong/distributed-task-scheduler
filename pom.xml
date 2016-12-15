@@ -9,6 +9,8 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
+    <name>Distributed Task Scheduler</name>
+    <description>Distributed Task Scheduler, use DTS for short</description>
 
     <modules>
         <module>dts-server</module>
@@ -19,6 +21,14 @@
         <module>dts-web</module>
     </modules>
 
+    <contributors>
+        <contributor>
+            <email>maohong.tech@gmail.com</email>
+            <name>Hong Mao</name>
+            <timezone>CCT +08:00</timezone>
+            <url>https://maohong.github.io</url>
+        </contributor>
+    </contributors>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

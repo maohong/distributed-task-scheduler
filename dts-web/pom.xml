@@ -16,4 +16,58 @@
     <name>DTS Web App</name>
     <description>Web App for Managing Distributed Task Scheduler</description>
 
+
+    <build>
+        <finalName>${artifactId}-${version}</finalName>
+        <outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
+        <testOutputDirectory>src/main/webapp/WEB-INF/classes</testOutputDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>1.6</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <skip>true</skip>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>
+            <!--&lt;!&ndash; Hibernate lazy load bytecode enhancement &ndash;&gt;
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>instrument-hibernate-entity</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>copy-war</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <echo message="****** copying war ******" />
+                                <copy todir="${project.build.directory}/../output">
+                                    <fileset dir="${project.build.directory}">
+                                        <include name="*.war" />
+                                    </fileset>
+                                </copy>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>-->
+        </plugins>
+    </build>
+
+
 </project>

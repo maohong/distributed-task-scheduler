@@ -15,7 +15,7 @@ public class DateUtils {
 
     private final static String[] chineseWeekNames = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
 
-    /**
+    /**id_rsa_163
      * 根据给定的日期串 转化成日期
      */
     public static Date parseDate(String date, String format) {

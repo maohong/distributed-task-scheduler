@@ -16,5 +16,11 @@
     <name>DTS Scheduler Server</name>
     <description>Scheduler Server for Distributed Task Scheduler</description>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>mh-tech</groupId>
+            <artifactId>dts-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

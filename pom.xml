@@ -21,31 +21,22 @@
         <module>dts-web</module>
     </modules>
 
-    <contributors>
-        <contributor>
-            <email>maohong.tech@gmail.com</email>
+    <developers>
+        <developer>
             <name>Hong Mao</name>
-            <timezone>CCT +08:00</timezone>
+            <email>maohong.tech@gmail.com</email>
             <url>https://maohong.github.io</url>
-        </contributor>
-    </contributors>
+            <timezone>CCT +08:00</timezone>
+            <roles>
+                <role>project owner</role>
+            </roles>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <!-- maven plugin versions -->
-        <maven-deploy-plugin.version>2.8.1</maven-deploy-plugin.version>
-        <maven-site-plugin.version>3.4</maven-site-plugin.version>
-        <maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
-        <maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
-        <maven-dependency-plugin.version>2.8</maven-dependency-plugin.version>
-        <maven-enforcer-plugin.version>1.3.1</maven-enforcer-plugin.version>
-        <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
-        <apache-rat-plugin.version>0.10</apache-rat-plugin.version>
-        <wagon-ssh.version>1.0</wagon-ssh.version>
-        <maven-clover2-plugin.version>3.3.0</maven-clover2-plugin.version>
-        <maven-bundle-plugin.version>2.5.0</maven-bundle-plugin.version>
+        <spring.version>2.5.6</spring.version>
     </properties>
 
     <build>
@@ -99,38 +90,71 @@
     </build>
 
     <dependencies>
+
+        <!--spring-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--web-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.4</version>
-            <type>jar</type>
-            <scope>compile</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring</artifactId>
-            <version>2.5.6</version>
-        </dependency>
-
         <dependency>
             <groupId>javax.annotation</groupId>
             <artifactId>jsr250-api</artifactId>
             <version>1.0</version>
         </dependency>
 
+        <!--db-->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate</artifactId>
             <version>3.2.2.ga</version>
         </dependency>
-
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-annotations</artifactId>
             <version>3.3.1.GA</version>
         </dependency>
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+            <version>1.1</version>
+        </dependency>
 
+
+        <!--common utils-->
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
@@ -157,21 +181,25 @@
             <version>2.4</version>
         </dependency>
         <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.8.3</version>
+            <type>jar</type>
+        </dependency>
+
+        <!--log-->
+        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.14</version>
-            <type>jar</type>
-            <scope>compile</scope>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.5.8</version>
-            <type>jar</type>
-            <scope>compile</scope>
         </dependency>
 
+        <!--quartz-->
         <dependency>
             <groupId>org.terracotta</groupId>
             <artifactId>quartz-all</artifactId>
@@ -182,6 +210,96 @@
             <artifactId>quartz-terracotta</artifactId>
             <version>1.2.1</version>
         </dependency>
+
+        <!--http-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+
+        <!--datetime-->
+        <dependency>
+            <groupId>joda</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>1.6.2</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+
+        <!--utils-->
+        <dependency>
+            <groupId>lombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>0.11.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>17.0</version>
+        </dependency>
+
+        <!--json-->
+        <dependency>
+            <groupId>net.sf</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20090211</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-lgpl</artifactId>
+            <version>1.9.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-lgpl</artifactId>
+            <version>1.9.10</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ezmorph</groupId>
+            <artifactId>ezmorph</artifactId>
+            <version>1.0.6</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-lang</groupId>
+                    <artifactId>commons-lang</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--html/xml-->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xerces</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+
+
     </dependencies>
 
     <profiles>

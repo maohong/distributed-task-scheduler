@@ -19,56 +19,42 @@
         <param-value>classpath:appContext-dts-scheduler-server.xml</param-value>
     </context-param>
 
-
-
-    <!--<listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-
     <listener>
-        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>com.sogou.bizdev.scheduler.server.StartupListener</listener-class>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
     </listener>
 
     <filter>
-        <filter-name>APIAuthenticationFilterProxy</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.mh.dts.common.http.filter.CharacterEncodingFilter</filter-class>
         <init-param>
-            <param-name>targetBeanName</param-name>
-            <param-value>apiAuthenticationFilter</param-value>
+            <param-name>requestEncoding</param-name>
+            <param-value>UTF-8</param-value>
         </init-param>
         <init-param>
-            <param-name>targetFilterLifecycle</param-name>
+            <param-name>responseEncoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>isSetContentType</param-name>
             <param-value>true</param-value>
         </init-param>
     </filter>
-
     <filter-mapping>
-        <filter-name>APIAuthenticationFilterProxy</filter-name>
-        <url-pattern>/api/*</url-pattern>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>*</url-pattern>
     </filter-mapping>
 
+    <servlet>
+        <servlet-name>taskScheduleServlet</servlet-name>
+        <servlet-class>org.mh.dts.common.http.servlet.DelegateServletProxy</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>taskScheduleServlet</servlet-name>
+        <url-pattern>/taskSchedule.do</url-pattern>
+    </servlet-mapping>
 
-    <filter>
-        <filter-name>APIFilterProxy</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-        <init-param>
-            <param-name>targetBeanName</param-name>
-            <param-value>apiFilter</param-value>
-        </init-param>
-        <init-param>
-            <param-name>targetFilterLifecycle</param-name>
-            <param-value>true</param-value>
-        </init-param>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>APIFilterProxy</filter-name>
-        <url-pattern>/api/*</url-pattern>
-    </filter-mapping>-->
 
     <!-- Error Page -->
     <error-page>

@@ -13,8 +13,8 @@
     <description>Distributed Task Scheduler, use DTS for short</description>
 
     <modules>
-        <module>dts-server</module>
-        <module>dts-server-api</module>
+        <module>dts-scheduler</module>
+        <module>dts-scheduler-api</module>
         <module>dts-taskproxy</module>
         <module>dts-taskproxy-api</module>
         <module>dts-common</module>

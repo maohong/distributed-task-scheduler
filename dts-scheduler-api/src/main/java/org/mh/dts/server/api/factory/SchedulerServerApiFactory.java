@@ -1,6 +1,7 @@
 package org.mh.dts.server.api.factory;
 
 import lombok.extern.slf4j.Slf4j;
+import org.mh.dts.scheduler.api.taskproxy.TaskProxyCallbackRequestApi;
 import org.mh.dts.scheduler.api.web.TaskScheduleRequestApi;
 
 import java.lang.reflect.Method;
@@ -16,6 +17,7 @@ public class SchedulerServerApiFactory {
     public static Map<Class,Set<String>> apiMethodMap = new HashMap<>();
     static {
         apiList.add(TaskScheduleRequestApi.class);
+        apiList.add(TaskProxyCallbackRequestApi.class);
 
         for (Class clazz : apiList) {
             apiMethodMap.put(clazz, new HashSet<String>());
@@ -27,5 +29,5 @@ public class SchedulerServerApiFactory {
         log.info("inited SchedulerServerApi map: " + apiMethodMap.toString());
     }
 
-
+    // TODO: 2016/12/19 offer api visitor utils
 }

@@ -28,7 +28,7 @@ public class TaskScheduleServlet extends BaseServlet {
         super.init();
         WebApplicationContext wac = WebApplicationContextUtils
                 .getRequiredWebApplicationContext(getServletContext());
-        taskScheduleRequestHandler = (TaskScheduleRequestHandler)wac.getBean("requestHandlerBeanName");
+        taskScheduleRequestHandler = (TaskScheduleRequestHandler)wac.getBean(requestHandlerBeanName);
     }
 
     @Override

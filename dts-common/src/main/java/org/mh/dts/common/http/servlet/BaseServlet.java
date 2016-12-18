@@ -1,14 +1,13 @@
 package org.mh.dts.common.http.servlet;
 
 import lombok.extern.slf4j.Slf4j;
+import org.mh.dts.common.utils.HttpUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Map;
 
 @Slf4j
@@ -46,24 +45,8 @@ public abstract class BaseServlet extends HttpServlet {
 
         SchedulerServerResponse result = processRequest(request.getParameterMap(),
                 request.getSession());
-        sendData(request, response, result == null ? "" : result.toJson());
+        HttpUtils.sendResponseData(request, response, result == null ? "" : result.toJson());
 
-    }
-
-    private void sendData(HttpServletRequest request,
-                          HttpServletResponse response, String data) throws IOException {
-        OutputStream os = null;
-        try {
-            response.setContentType("text/javascript;charset=UTF-8");
-            os = response.getOutputStream();
-            os.write(data.getBytes("UTF-8"));
-            os.flush();
-        } finally {
-            if (null != os) {
-                os.close();
-            }
-
-        }
     }
 
     /**

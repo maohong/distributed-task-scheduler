@@ -46,6 +46,23 @@
         <url-pattern>*</url-pattern>
     </filter-mapping>
 
+    <filter>
+        <filter-name>authenticationFilter</filter-name>
+        <filter-class>org.mh.dts.common.http.filter.AuthenticationFilter</filter-class>
+        <init-param>
+            <param-name>paramsForAuth</param-name>
+            <param-value>apiKey_clientName_timeStamp_Ip</param-value>
+        </init-param>
+        <init-param>
+            <param-name>paramSecretBeanName</param-name>
+            <param-value>apiSecret</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>authenticationFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>taskScheduleServlet</servlet-name>
         <servlet-class>org.mh.dts.common.http.servlet.DelegateServletProxy</servlet-class>

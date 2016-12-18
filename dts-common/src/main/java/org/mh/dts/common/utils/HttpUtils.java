@@ -2,6 +2,10 @@ package org.mh.dts.common.utils;
 
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,6 +14,19 @@ import java.util.List;
  */
 public class HttpUtils {
 
+    public static void sendResponseData(HttpServletRequest request, HttpServletResponse response, String msg) throws IOException {
+        OutputStream os = null;
+        try {
+            response.setContentType("text/javascript;charset=UTF-8");
+            os = response.getOutputStream();
+            os.write(msg.getBytes("UTF-8"));
+            os.flush();
+        } finally {
+            if (null != os) {
+                os.close();
+            }
+        }
+    }
 
 
     public static List<String> getProxyList()

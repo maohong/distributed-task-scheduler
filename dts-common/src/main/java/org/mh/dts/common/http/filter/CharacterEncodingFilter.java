@@ -3,6 +3,9 @@ package org.mh.dts.common.http.filter;
 import javax.servlet.*;
 import java.io.IOException;
 
+/**
+ *
+ */
 public class CharacterEncodingFilter implements Filter {
     String requestEncoding;
     String responseEncoding;

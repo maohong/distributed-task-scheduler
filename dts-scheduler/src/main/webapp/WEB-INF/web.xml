@@ -62,6 +62,10 @@
     <servlet>
         <servlet-name>taskScheduleServlet</servlet-name>
         <servlet-class>org.mh.dts.common.http.servlet.DelegateServletProxy</servlet-class>
+        <init-param>
+            <param-name>requestHandlerBeanName</param-name>
+            <param-value>taskScheduleRequestHandler</param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>taskScheduleServlet</servlet-name>

@@ -7,5 +7,6 @@ public class DtsConstant {
 
     public static final String REQUEST_HEADER_NAME_FOR_AUTH = "REQUEST_AUTHENTICATION_INFO";
 
+    public static final String REQUEST_PARAM_NAME_API_METHOD = "apiMethod";
 
 }

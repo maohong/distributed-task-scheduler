@@ -10,7 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>dts-server-api</artifactId>
+    <artifactId>dts-scheduler-api</artifactId>
     <packaging>jar</packaging>
 
     <name>DTS Scheduler Server API</name>

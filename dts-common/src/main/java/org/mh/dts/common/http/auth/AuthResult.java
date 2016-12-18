@@ -12,9 +12,13 @@ public class AuthResult {
 
     public static final AuthResult PASS = new AuthResult(true, "pass authentication");
 
-    public AuthResult(boolean authPass, String msg) {
+    private AuthResult(boolean authPass, String msg) {
         this.authPass = authPass;
         this.msg = msg;
+    }
+
+    public static AuthResult fail(String msg) {
+        return new AuthResult(false, msg);
     }
 
     public static AuthResult failForMissParam(String ... params) {
@@ -36,4 +40,5 @@ public class AuthResult {
     public void setMsg(String msg) {
         this.msg = msg;
     }
+
 }

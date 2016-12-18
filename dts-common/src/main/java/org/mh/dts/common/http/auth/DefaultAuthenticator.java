@@ -1,15 +1,13 @@
 package org.mh.dts.common.http.auth;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.mh.dts.common.constant.DtsConstant;
 import org.mh.dts.common.utils.MD5Generator;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by maohong on 2016/12/18.
@@ -17,45 +15,61 @@ import java.util.Map;
 @Slf4j
 public class DefaultAuthenticator implements ApiAuthenticator {
 
-    @Resource
-    private List<String> paramNamesForAuth;
-    @Resource
+    private List<String> paramsForAuth;
     private String apiSecret;
 
     @Override
     public AuthResult authenticate(ServletRequest request) {
 
-        if (CollectionUtils.isEmpty(paramNamesForAuth))
-            return AuthResult.PASS;
+        HttpServletRequest httpServletRequest = (HttpServletRequest)request;
+        String authInfo = httpServletRequest.getHeader(DtsConstant.REQUEST_HEADER_NAME_FOR_AUTH);
+        if (StringUtils.isBlank(authInfo))
+            return AuthResult.fail("miss auth info in header : " + DtsConstant.REQUEST_HEADER_NAME_FOR_AUTH);
 
-        Map<String, Object> paramMap = request.getParameterMap();
-        if (!paramMap.containsKey(DtsConstant.REQUEST_PARAM_NAME_TOKEN)) {
-            return AuthResult.failForMissParam(DtsConstant.REQUEST_PARAM_NAME_TOKEN);
+        // authInfo contains a calculated token, which is the last element of authInfo
+        String [] items = authInfo.split("\t");
+        if (items.length-1 != paramsForAuth.size()) {
+            return AuthResult.fail(String.format("auth param count incorrect! Expected %d, actually %d",
+                                    paramsForAuth.size(), items.length-1));
         }
 
-        String token = (String) paramMap.get(DtsConstant.REQUEST_PARAM_NAME_TOKEN);
-        StringBuffer str = new StringBuffer(apiSecret + "_");
-        List<String> missParams = new ArrayList<>(paramNamesForAuth.size());
-        for (String param : paramNamesForAuth)
-        {
-            if (!paramMap.containsKey(param)) {
-                missParams.add(param);
-            }
-            else {
-                str.append("_");
-                str.append((String) paramMap.get(param));
-            }
+        String clientToken = items[items.length-1];
+        StringBuffer str = new StringBuffer(apiSecret);
+        StringBuffer paramInfo = new StringBuffer("[");
+        for (int i=0; i<items.length-1; i++) {
+            str.append("\t").append(items[i]);
+            if (i != 0)
+                paramInfo.append(", ");
+            paramInfo.append(paramsForAuth.get(i)).append(":").append(items[i]);
         }
-        if (!missParams.isEmpty()) {
-            return AuthResult.failForMissParam(missParams.toArray(new String[]{}));
-        }
+        paramInfo.append("]");
 
+        log.info("authenticate request " + paramInfo.toString());
         String validToken = MD5Generator.generateTokenString(str.toString());
-        if (validToken.equals(token))
+        if (validToken.equals(clientToken)) {
+            log.info("authenticate request " + paramInfo.toString() + " : pass");
             return AuthResult.PASS;
-        else
-            return new AuthResult(false, "authentication failed, apiSecret incorrect!");
+        }
+        else {
+            log.info("authenticate request " + paramInfo.toString() + " : reject");
+            return AuthResult.fail("authentication failed, apiSecret incorrect!");
+        }
 
     }
 
+    public List<String> getParamsForAuth() {
+        return paramsForAuth;
+    }
+
+    public void setParamsForAuth(List<String> paramsForAuth) {
+        this.paramsForAuth = paramsForAuth;
+    }
+
+    public String getApiSecret() {
+        return apiSecret;
+    }
+
+    public void setApiSecret(String apiSecret) {
+        this.apiSecret = apiSecret;
+    }
 }

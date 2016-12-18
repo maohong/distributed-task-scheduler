@@ -5,7 +5,7 @@ package org.mh.dts.common.constant;
  */
 public class DtsConstant {
 
-    public static final String REQUEST_PARAM_NAME_TOKEN = "token";
+    public static final String REQUEST_HEADER_NAME_FOR_AUTH = "REQUEST_AUTHENTICATION_INFO";
 
 
 }

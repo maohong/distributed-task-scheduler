@@ -6,7 +6,6 @@ import org.apache.http.entity.ContentType;
 import java.nio.charset.Charset;
 
 /**
- * @Author maohong@sogou-inc.com
  * 2016/12/5 17:12
  */
 public final class ContentTypes {

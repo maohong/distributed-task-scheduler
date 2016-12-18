@@ -4,7 +4,6 @@ import org.apache.http.client.config.RequestConfig;
 import org.mh.dts.common.http.builder.RunTaskRequestBuilder;
 
 /**
- * @Author maohong@sogou-inc.com
  * 2016/12/5 16:53
  */
 public class LingyunClientUtils {

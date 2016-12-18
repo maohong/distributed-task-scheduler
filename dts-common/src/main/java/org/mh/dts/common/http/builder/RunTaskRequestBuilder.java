@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author maohong@sogou-inc.com
  * 2016/12/5 16:59
  */
 public class RunTaskRequestBuilder implements TaskRequestBuilder {

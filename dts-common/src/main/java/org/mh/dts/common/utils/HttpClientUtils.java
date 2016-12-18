@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author maohong@sogou-inc.com
  * 2016/12/5 17:42
  */
 public final class HttpClientUtils {

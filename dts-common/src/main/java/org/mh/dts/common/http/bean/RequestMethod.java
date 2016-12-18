@@ -2,7 +2,6 @@ package org.mh.dts.common.http.bean;
 
 
 /**
- * @Author maohong@sogou-inc.com
  * 2016/12/5 17:07
  */
 public enum RequestMethod {

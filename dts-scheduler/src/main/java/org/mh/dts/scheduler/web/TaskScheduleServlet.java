@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by maohong on 2016/12/17.
@@ -23,19 +24,27 @@ public class TaskScheduleServlet extends BaseServlet {
     private String requestHandlerBeanName;
     private TaskScheduleRequestHandler taskScheduleRequestHandler;
 
+    private Map<String, Method> availableMethods = new ConcurrentHashMap<>();
+
     @Override
     public void init() throws ServletException {
         super.init();
         WebApplicationContext wac = WebApplicationContextUtils
                 .getRequiredWebApplicationContext(getServletContext());
         taskScheduleRequestHandler = (TaskScheduleRequestHandler)wac.getBean(requestHandlerBeanName);
+        for (Method method : taskScheduleRequestHandler.getClass().getDeclaredMethods()) {
+            availableMethods.put(method.getName(), method);
+        }
     }
 
     @Override
     protected DtsResponse processRequest(Map<String, Object> param, HttpSession session) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
         String requestMethod = (String)param.get(DtsConstant.REQUEST_PARAM_NAME_API_METHOD);
-        Method method = taskScheduleRequestHandler.getClass().getDeclaredMethod(requestMethod, Map.class);
+        if (!availableMethods.containsKey(requestMethod)) {
+            throw new NoSuchMethodException("invalid request for API method : " + requestMethod);
+        }
+        Method method = availableMethods.get(requestMethod);
         DtsResponse response = (DtsResponse) method.invoke(taskScheduleRequestHandler, param);
         return response;
     }

@@ -13,6 +13,13 @@ public class TaskScheduleRequestHandler implements TaskScheduleRequestApi {
     @Override
     public DtsResponse scheduleByTriggerId(Map<String, Object> params) {
 
+
+        return null;
+    }
+
+    @Override
+    public DtsResponse runTaskNow(Map<String, Object> params) {
+
         return null;
     }
 

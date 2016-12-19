@@ -10,4 +10,5 @@ import java.util.Map;
 public interface TaskScheduleRequestApi {
 
     public DtsResponse scheduleByTriggerId(Map<String, Object> params);
+    public DtsResponse runTaskNow(Map<String, Object> params);
 }

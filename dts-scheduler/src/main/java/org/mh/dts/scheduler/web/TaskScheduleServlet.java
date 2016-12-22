@@ -1,8 +1,10 @@
 package org.mh.dts.scheduler.web;
 
+import org.apache.commons.lang.StringUtils;
 import org.mh.dts.common.constant.DtsConstant;
 import org.mh.dts.common.http.servlet.BaseServlet;
 import org.mh.dts.common.http.servlet.DtsResponse;
+import org.mh.dts.common.utils.JsonUtils;
 import org.mh.dts.scheduler.handler.TaskScheduleRequestHandler;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -11,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.security.InvalidParameterException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -40,12 +43,24 @@ public class TaskScheduleServlet extends BaseServlet {
     @Override
     protected DtsResponse processRequest(Map<String, Object> param, HttpSession session) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
-        String requestMethod = (String)param.get(DtsConstant.REQUEST_PARAM_NAME_API_METHOD);
+        String requestMethod = getParam(param, DtsConstant.REQUEST_PARAM_NAME_API_METHOD);
         if (!availableMethods.containsKey(requestMethod)) {
             throw new NoSuchMethodException("invalid request for API method : " + requestMethod);
         }
+
+        DtsResponse response;
         Method method = availableMethods.get(requestMethod);
-        DtsResponse response = (DtsResponse) method.invoke(taskScheduleRequestHandler, param);
+        Class [] paramTypes = method.getParameterTypes();
+        if (paramTypes == null || paramTypes.length == 0) {
+            response = (DtsResponse) method.invoke(taskScheduleRequestHandler);
+        }
+        else {
+            String parameters = getParam(param, DtsConstant.REQUEST_PARAM_NAME_API_PARAMS);
+            if (StringUtils.isBlank(parameters))
+                throw new InvalidParameterException("parameter for API method " + requestMethod + " is null or empty!");
+            Object apiParam = JsonUtils.readObject(parameters, paramTypes[0]);
+            response = (DtsResponse) method.invoke(taskScheduleRequestHandler, apiParam);
+        }
         return response;
     }
 

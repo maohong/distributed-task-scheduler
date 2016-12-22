@@ -9,4 +9,6 @@ public class DtsConstant {
 
     public static final String REQUEST_PARAM_NAME_API_METHOD = "apiMethod";
 
+    public static final String REQUEST_PARAM_NAME_API_PARAMS = "apiParameters";
+
 }

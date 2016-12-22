@@ -3,6 +3,7 @@ package org.mh.dts.common.http.servlet;
 import lombok.extern.slf4j.Slf4j;
 import org.mh.dts.common.constant.DtsConstant;
 import org.mh.dts.common.utils.HttpUtils;
+import org.mh.dts.common.utils.JsonUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -50,7 +51,7 @@ public abstract class BaseServlet extends HttpServlet {
         }
         DtsResponse result = processRequest(request.getParameterMap(),
                 request.getSession());
-        HttpUtils.sendResponseData(request, response, result == null ? "" : result.toJson());
+        HttpUtils.sendResponseData(request, response, JsonUtils.toJsonStringFromObject(result));
 
     }
 

@@ -25,6 +25,7 @@
         </listener-class>
     </listener>
 
+    <!-- filters -->
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.mh.dts.common.http.filter.CharacterEncodingFilter</filter-class>
@@ -59,17 +60,70 @@
         <url-pattern>*</url-pattern>
     </filter-mapping>
 
+    <!-- servlets -->
     <servlet>
         <servlet-name>taskScheduleServlet</servlet-name>
         <servlet-class>org.mh.dts.common.http.servlet.DelegateServletProxy</servlet-class>
         <init-param>
-            <param-name>requestHandlerBeanName</param-name>
-            <param-value>taskScheduleRequestHandler</param-value>
+            <param-name>apiHandlerBeanName</param-name>
+            <param-value>taskScheduleApiHandler</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>taskScheduleServlet</servlet-name>
         <url-pattern>/taskSchedule.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>quartzSchedulerManageServlet</servlet-name>
+        <servlet-class>org.mh.dts.common.http.servlet.DelegateServletProxy</servlet-class>
+        <init-param>
+            <param-name>apiHandlerBeanName</param-name>
+            <param-value>quartzSchedulerManageApiHandler</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>quartzSchedulerManageServlet</servlet-name>
+        <url-pattern>/quartzSchedulerManage.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>quartzJobManageServlet</servlet-name>
+        <servlet-class>org.mh.dts.common.http.servlet.DelegateServletProxy</servlet-class>
+        <init-param>
+            <param-name>apiHandlerBeanName</param-name>
+            <param-value>quartzJobManageApiHandler</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>quartzJobManageServlet</servlet-name>
+        <url-pattern>/quartzJobrManage.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>quartzTriggerManageServlet</servlet-name>
+        <servlet-class>org.mh.dts.common.http.servlet.DelegateServletProxy</servlet-class>
+        <init-param>
+            <param-name>apiHandlerBeanName</param-name>
+            <param-value>quartzTriggerManageApiHandler</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>quartzTriggerManageServlet</servlet-name>
+        <url-pattern>/quartzTriggerManage.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>taskProxyCallbackServlet</servlet-name>
+        <servlet-class>org.mh.dts.common.http.servlet.DelegateServletProxy</servlet-class>
+        <init-param>
+            <param-name>apiHandlerBeanName</param-name>
+            <param-value>taskProxyCallbackApiHandler</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>taskProxyCallbackServlet</servlet-name>
+        <url-pattern>/taskProxyCallback.do</url-pattern>
     </servlet-mapping>
 
 

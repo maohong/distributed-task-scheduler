@@ -9,5 +9,4 @@ public abstract class DtsResponse implements Serializable{
 
     private static final long serialVersionUID = 4558340474090209307L;
 
-    abstract public String toJson();
 }

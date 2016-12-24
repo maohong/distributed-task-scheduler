@@ -2,7 +2,7 @@ package org.mh.dts.common.http.auth;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.mh.dts.common.constant.DtsConstant;
+import org.mh.dts.common.constant.HttpRequestParamName;
 import org.mh.dts.common.utils.MD5Generator;
 
 import javax.servlet.ServletRequest;
@@ -22,9 +22,9 @@ public class DefaultAuthenticator implements ApiAuthenticator {
     public AuthResult authenticate(ServletRequest request) {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest)request;
-        String authInfo = httpServletRequest.getHeader(DtsConstant.REQUEST_HEADER_NAME_FOR_AUTH);
+        String authInfo = httpServletRequest.getHeader(HttpRequestParamName.REQUEST_HEADER_NAME_FOR_AUTH.getParam());
         if (StringUtils.isBlank(authInfo))
-            return AuthResult.fail("miss auth info in header : " + DtsConstant.REQUEST_HEADER_NAME_FOR_AUTH);
+            return AuthResult.fail("miss auth info in header : " + HttpRequestParamName.REQUEST_HEADER_NAME_FOR_AUTH.getParam());
 
         // authInfo contains a calculated token, which is the last element of authInfo
         String [] items = authInfo.split("\t");

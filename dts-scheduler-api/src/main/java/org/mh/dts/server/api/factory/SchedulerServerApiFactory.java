@@ -2,6 +2,9 @@ package org.mh.dts.server.api.factory;
 
 import lombok.extern.slf4j.Slf4j;
 import org.mh.dts.scheduler.api.taskproxy.TaskProxyCallbackApi;
+import org.mh.dts.scheduler.api.web.QuartzJobManageApi;
+import org.mh.dts.scheduler.api.web.QuartzSchedulerManageApi;
+import org.mh.dts.scheduler.api.web.QuartzTriggerManageApi;
 import org.mh.dts.scheduler.api.web.TaskScheduleApi;
 
 import java.lang.reflect.Method;
@@ -17,6 +20,9 @@ public class SchedulerServerApiFactory {
     public static Map<Class,Set<String>> apiMethodMap = new HashMap<>();
     static {
         apiList.add(TaskScheduleApi.class);
+        apiList.add(QuartzJobManageApi.class);
+        apiList.add(QuartzSchedulerManageApi.class);
+        apiList.add(QuartzTriggerManageApi.class);
         apiList.add(TaskProxyCallbackApi.class);
 
         for (Class clazz : apiList) {
@@ -30,4 +36,6 @@ public class SchedulerServerApiFactory {
     }
 
     // TODO: 2016/12/19 offer api visitor utils
+
+
 }

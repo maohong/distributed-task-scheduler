@@ -27,6 +27,7 @@
                 <value>ip</value>
                 <value>clientName</value>
                 <value>timeStamp</value>
+                <value>apiMethod</value>
             </list>
         </property>
         <property name="apiSecret" value="${api.secret}"/>

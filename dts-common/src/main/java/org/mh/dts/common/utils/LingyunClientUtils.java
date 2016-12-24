@@ -18,7 +18,7 @@ public class LingyunClientUtils {
             if(builder == null) {
                 throw new IllegalArgumentException("builder must not be null");
             } else {
-                String response = HttpClientUtils.post(url, builder.build(), requestConfig);
+                String response = HttpClientUtils.post(url, builder.build(), requestConfig, null);
                 return response;
             }
         } else {

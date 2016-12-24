@@ -20,6 +20,7 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
+import org.mh.dts.common.constant.HttpRequestParamName;
 
 import javax.net.ssl.SSLException;
 import java.io.IOException;
@@ -52,17 +53,18 @@ public final class HttpClientUtils {
     }
 
     public static <K, V> String post(String url, HttpEntity entity) {
-        return post(url, entity, DEFAULT_REQUEST_CONFIG);
+        return post(url, entity, DEFAULT_REQUEST_CONFIG, null);
     }
 
-    public static <K, V> String post(String url, HttpEntity entity, RequestConfig requestConfig) {
+    public static <K, V> String post(String url, HttpEntity entity, RequestConfig requestConfig, String authSecret) {
         HttpPost request = new HttpPost(url);
         ((HttpRequestBase)HttpRequestBase.class.cast(request)).setConfig(requestConfig != null?requestConfig:DEFAULT_REQUEST_CONFIG);
         request.setEntity(entity);
         request.addHeader("User-Agent",
                 "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36");
-        request.addHeader("X-FORWARDED-FOR", "111.222.333.4");
-        request.addHeader("CLIENT-IP", "111.222.333.4");
+        if (authSecret != null) {
+            request.addHeader(HttpRequestParamName.REQUEST_HEADER_NAME_FOR_AUTH.getParam(), authSecret);
+        }
         return execute(request);
     }
 
@@ -83,7 +85,6 @@ public final class HttpClientUtils {
                     response = EntityUtils.toString(entity, encoding);
                 }
             } else {
-                System.out.println(code);
                 logger.error(String.format("StatusCodeError:[rawPath:%s,method:%s,rawQuery:%s,statusCode:%s,statusText:%s]", new Object[]{request.getURI().getRawPath(), request.getMethod(), request.getURI().getRawQuery(), Integer.valueOf(code), statusLine.getReasonPhrase()}));
             }
         } catch (IOException e) {

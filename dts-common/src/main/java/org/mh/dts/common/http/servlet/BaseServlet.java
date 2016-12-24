@@ -1,8 +1,7 @@
 package org.mh.dts.common.http.servlet;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
-import org.mh.dts.common.constant.DtsConstant;
+import org.mh.dts.common.constant.HttpRequestParamName;
 import org.mh.dts.common.utils.HttpUtils;
 import org.mh.dts.common.utils.JsonUtils;
 import org.springframework.web.context.WebApplicationContext;
@@ -16,7 +15,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -69,7 +69,7 @@ public abstract class BaseServlet<T> extends HttpServlet {
 
     protected DtsResponse processRequest(Map<String, Object> param, HttpSession session) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
-        String requestMethod = getParam(param, DtsConstant.REQUEST_PARAM_NAME_API_METHOD);
+        String requestMethod = getParam(param, HttpRequestParamName.REQUEST_PARAM_NAME_API_METHOD.getParam());
         if (!availableMethods.containsKey(requestMethod)) {
             throw new NoSuchMethodException("invalid request for API method : " + requestMethod);
         }
@@ -81,11 +81,14 @@ public abstract class BaseServlet<T> extends HttpServlet {
             response = (DtsResponse) method.invoke(apiHandler);
         }
         else {
-            String parameters = getParam(param, DtsConstant.REQUEST_PARAM_NAME_API_PARAMS);
-            if (StringUtils.isBlank(parameters))
-                throw new InvalidParameterException("parameter for API method " + requestMethod + " is null or empty!");
-            Object apiParam = JsonUtils.readObject(parameters, paramTypes[0]);
-            response = (DtsResponse) method.invoke(apiHandler, apiParam);
+            List<Object> apiParams = new ArrayList<>(paramTypes.length);
+            for (int i=0; i<paramTypes.length; i++) {
+                String parameter = getParam(param,
+                        HttpRequestParamName.REQUEST_PARAM_NAME_API_PARAMS.getParam() + i);
+                Object apiParam = JsonUtils.readObject(parameter, paramTypes[i]);
+                apiParams.add(apiParam);
+            }
+            response = (DtsResponse) method.invoke(apiHandler, apiParams);
         }
         return response;
     }
@@ -97,17 +100,18 @@ public abstract class BaseServlet<T> extends HttpServlet {
             return;
         }
         DtsResponse result = processRequest(request.getParameterMap(), request.getSession());
-        HttpUtils.sendResponseData(request, response, JsonUtils.toJsonStringFromObject(result));
+        HttpUtils.sendResponseData(request, response, JsonUtils.toJsonString(result));
 
     }
 
     private boolean validateRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        String requestMethod = request.getParameter(DtsConstant.REQUEST_PARAM_NAME_API_METHOD);
+        String requestMethod = request.getParameter(HttpRequestParamName.REQUEST_PARAM_NAME_API_METHOD.getParam());
         boolean isOk = requestMethod!=null && !requestMethod.isEmpty();
         if (isOk) {
             HttpUtils.sendResponseData(request, response,
-                    String.format("request parameter %s needed!", DtsConstant.REQUEST_PARAM_NAME_API_METHOD));
+                    String.format("request parameter %s needed!",
+                            HttpRequestParamName.REQUEST_PARAM_NAME_API_METHOD.getParam()));
         }
         return isOk;
     }

@@ -97,7 +97,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>quartzJobManageServlet</servlet-name>
-        <url-pattern>/quartzJobrManage.do</url-pattern>
+        <url-pattern>/quartzJobManage.do</url-pattern>
     </servlet-mapping>
 
     <servlet>

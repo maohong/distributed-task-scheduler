@@ -107,7 +107,7 @@ public class TaskInfoDto implements Serializable {
         dto.setExternalData(new HashMap<String, String>(){{put("a","1");put("b","2");}});
         dto.setOperator("maohong");
         dto.setRunWithDepend(false);
-        String str = JsonUtils.toJsonStringFromObject(dto);
+        String str = JsonUtils.toJsonString(dto);
 
         System.out.println(str);
 

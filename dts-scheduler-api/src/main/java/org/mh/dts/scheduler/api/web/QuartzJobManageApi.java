@@ -1,7 +1,7 @@
 package org.mh.dts.scheduler.api.web;
 
+import org.mh.dts.scheduler.api.dto.QuartzJobDetail;
 import org.mh.dts.scheduler.api.dto.SchedulerResponse;
-import org.quartz.JobDetail;
 
 import java.util.List;
 import java.util.Map;
@@ -19,6 +19,6 @@ public interface QuartzJobManageApi {
 
     public SchedulerResponse getTaskIsScheduledByTaskId(Long taskId);
 
-    public SchedulerResponse<List<JobDetail>> getAllJobDetails();
+    public SchedulerResponse<List<QuartzJobDetail>> getAllJobDetails();
 
 }

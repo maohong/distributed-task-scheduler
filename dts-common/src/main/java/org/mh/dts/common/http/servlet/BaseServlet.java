@@ -39,6 +39,7 @@ public abstract class BaseServlet<T> extends HttpServlet {
     @Override
     final public void init() throws ServletException {
         super.init();
+        apiHandlerBeanName = getServletConfig().getInitParameter("apiHandlerBeanName");
         WebApplicationContext wac = WebApplicationContextUtils
                 .getRequiredWebApplicationContext(getServletContext());
         apiHandler = (T)wac.getBean(apiHandlerBeanName);
@@ -67,7 +68,7 @@ public abstract class BaseServlet<T> extends HttpServlet {
         }
     }
 
-    protected DtsResponse processRequest(Map<String, Object> param, HttpSession session) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    protected DtsResponse processRequest(Map<String, String[]> param, HttpSession session) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
         String requestMethod = getParam(param, HttpRequestParamName.REQUEST_PARAM_NAME_API_METHOD.getParam());
         if (!availableMethods.containsKey(requestMethod)) {
@@ -76,19 +77,26 @@ public abstract class BaseServlet<T> extends HttpServlet {
 
         DtsResponse response;
         Method method = availableMethods.get(requestMethod);
-        Class [] paramTypes = method.getParameterTypes();
-        if (paramTypes == null || paramTypes.length == 0) {
-            response = (DtsResponse) method.invoke(apiHandler);
-        }
-        else {
-            List<Object> apiParams = new ArrayList<>(paramTypes.length);
-            for (int i=0; i<paramTypes.length; i++) {
-                String parameter = getParam(param,
-                        HttpRequestParamName.REQUEST_PARAM_NAME_API_PARAMS.getParam() + i);
-                Object apiParam = JsonUtils.readObject(parameter, paramTypes[i]);
-                apiParams.add(apiParam);
+        Class [] paramClasses = method.getParameterTypes();
+        List<Object> apiParams = new ArrayList<>(paramClasses.length);
+        for (int i=0; i<paramClasses.length; i++) {
+            String parameter = getParam(param,
+                    HttpRequestParamName.REQUEST_PARAM_NAME_API_PARAM_PREFIX.getParam() + i);
+            Object apiParam = null;
+            try {
+                apiParam = JsonUtils.readObject(parameter, paramClasses[i]);
+            } catch (Exception e) {
+                String msg = "error while parsing param: " + parameter + " . " + e.getMessage();
+                log.error(msg, e);
+                return new FailResponse(msg);
             }
-            response = (DtsResponse) method.invoke(apiHandler, apiParams);
+            apiParams.add(apiParam);
+        }
+        try {
+            response = (DtsResponse) method.invoke(apiHandler, apiParams.toArray());
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return null;
         }
         return response;
     }
@@ -108,7 +116,7 @@ public abstract class BaseServlet<T> extends HttpServlet {
 
         String requestMethod = request.getParameter(HttpRequestParamName.REQUEST_PARAM_NAME_API_METHOD.getParam());
         boolean isOk = requestMethod!=null && !requestMethod.isEmpty();
-        if (isOk) {
+        if (!isOk) {
             HttpUtils.sendResponseData(request, response,
                     String.format("request parameter %s needed!",
                             HttpRequestParamName.REQUEST_PARAM_NAME_API_METHOD.getParam()));
@@ -123,12 +131,12 @@ public abstract class BaseServlet<T> extends HttpServlet {
      * @param name  is parameter name
      * @return the first parameter value
      */
-    protected String getParam(Map<String, Object> param, String name) {
+    protected String getParam(Map<String, String[]> param, String name) {
         if (null == param.get(name)) {
             return null;
         }
 
-        return ((String[]) param.get(name))[0];
+        return param.get(name)[0];
     }
 
 }

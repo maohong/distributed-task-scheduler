@@ -20,9 +20,14 @@ public class SchedulerResponse<T> extends DtsResponse {
 
     private static final long serialVersionUID = -7896609569371317899L;
 
-    private boolean isOk;
-    private String msg;
     private T data;
+
+    public SchedulerResponse(){}
+
+    public SchedulerResponse(boolean isOk, String msg) {
+        this.isOk = isOk;
+        this.msg = msg;
+    }
 
     @Override
     public String toString() {
@@ -31,22 +36,6 @@ public class SchedulerResponse<T> extends DtsResponse {
                 ", msg='" + msg + '\'' +
                 ", data=" + data +
                 '}';
-    }
-
-    public boolean getIsOk() {
-        return isOk;
-    }
-
-    public void setIsOk(boolean ok) {
-        isOk = ok;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
     }
 
     public T getData() {
@@ -124,6 +113,7 @@ public class SchedulerResponse<T> extends DtsResponse {
         SchedulerResponse<List<QuartzJobDetail>> tores = (SchedulerResponse<List<QuartzJobDetail>>) JsonUtils.readObject(str1, method1.getReturnType());
         System.out.println(tores);
 
+        System.out.println(gson.toJson(new Long(1234)));
 
     }
 }

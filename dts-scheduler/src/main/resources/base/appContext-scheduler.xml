@@ -15,6 +15,7 @@
 		<property name="locations">
 			<list>
 				<value>classpath:scheduler.properties</value>
+				<value>classpath:quartz.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -33,4 +34,5 @@
         <property name="apiSecret" value="${api.secret}"/>
     </bean>
 
+	<bean id="jettyDaemon" class="org.mh.dts.scheduler.JettyDaemon" init-method="start"/>
 </beans>

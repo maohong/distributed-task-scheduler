@@ -55,7 +55,7 @@ public class HttpUtils {
 //            HttpHost proxy = new HttpHost("120.221.32.220", 80);
 //            RequestConfig requestConfig = RequestConfig.custom().setProxy(proxy).build();
 //            HttpClientUtils.post(url, builder.build(), requestConfig);
-            String response = HttpClientUtils.post(url, builder.build(), null);
+            String response = HttpClientUtils.post(url, builder.build(), null, null);
             System.out.println(response);
             t += (24*3600 + 1);
 //            Thread.sleep(15000L);

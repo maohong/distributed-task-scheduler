@@ -22,6 +22,7 @@ public class AuthenticationFilter implements Filter {
     private ApiAuthenticator apiAuthenticator;
 
     public void init(FilterConfig filterConfig) throws ServletException {
+        apiAuthenticatorBeanName = filterConfig.getInitParameter("apiAuthenticatorBeanName");
         applicationContext = (WebApplicationContext) filterConfig.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
         apiAuthenticator = (ApiAuthenticator) applicationContext.getBean(apiAuthenticatorBeanName);
     }

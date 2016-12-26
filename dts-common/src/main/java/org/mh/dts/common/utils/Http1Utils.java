@@ -26,7 +26,7 @@ public class Http1Utils {
             HttpHost proxy = new HttpHost("120.221.32.220", 80);
             RequestConfig requestConfig = RequestConfig.custom().setProxy(proxy).build();
 
-            HttpClientUtils.post(url, builder.build(), requestConfig);
+            HttpClientUtils.post(url, builder.build(), requestConfig, null);
 
             Thread.sleep(15000L);
 

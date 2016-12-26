@@ -16,7 +16,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:appContext-dts-scheduler-server.xml</param-value>
+        <param-value>classpath:appContext-scheduler.xml</param-value>
     </context-param>
 
     <listener>
@@ -47,7 +47,7 @@
         <url-pattern>*</url-pattern>
     </filter-mapping>
 
-    <filter>
+    <!--<filter>
         <filter-name>authenticationFilter</filter-name>
         <filter-class>org.mh.dts.common.http.filter.AuthenticationFilter</filter-class>
         <init-param>
@@ -58,7 +58,7 @@
     <filter-mapping>
         <filter-name>authenticationFilter</filter-name>
         <url-pattern>*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
 
     <!-- servlets -->
     <servlet>

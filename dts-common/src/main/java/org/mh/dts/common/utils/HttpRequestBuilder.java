@@ -42,7 +42,7 @@ public class HttpRequestBuilder implements TaskRequestBuilder {
 
     public HttpRequestBuilder addApiParameter(int index, String parameter) {
 
-        this.addTextBody(HttpRequestParamName.REQUEST_PARAM_NAME_API_PARAMS.getParam() + index , parameter);
+        this.addTextBody(HttpRequestParamName.REQUEST_PARAM_NAME_API_PARAM_PREFIX.getParam() + index , parameter);
         return this;
     }
 }

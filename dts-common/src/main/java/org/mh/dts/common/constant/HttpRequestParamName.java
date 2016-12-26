@@ -7,7 +7,7 @@ public enum HttpRequestParamName {
 
     REQUEST_HEADER_NAME_FOR_AUTH("REQUEST_AUTHENTICATION_INFO"),
     REQUEST_PARAM_NAME_API_METHOD("apiMethod"),
-    REQUEST_PARAM_NAME_API_PARAMS("apiParameters");
+    REQUEST_PARAM_NAME_API_PARAM_PREFIX("apiParam");
 
     private String param;
     private HttpRequestParamName(String param) {

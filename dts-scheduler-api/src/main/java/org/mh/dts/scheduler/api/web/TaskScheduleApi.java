@@ -30,14 +30,14 @@ public interface TaskScheduleApi {
      * @param triggerIds
      * @return
      */
-    public Map<Long,SchedulerResponse> scheduleByTriggerIds(List<Long> triggerIds);
+    public SchedulerResponse<Map<Long,Boolean>> scheduleByTriggerIds(List<Long> triggerIds);
 
     /**
      * scheduler a number of tasks, start scheduling all of their triggers
      * @param taskIds
      * @return
      */
-    public Map<Long,SchedulerResponse> scheduleByTaskIds(List<Long> taskIds);
+    public SchedulerResponse<Map<Long,Boolean>> scheduleByTaskIds(List<Long> taskIds);
 
     /**
      * unschedule a task by stop scheduling all its triggers
@@ -51,7 +51,7 @@ public interface TaskScheduleApi {
      * @param taskIds
      * @return
      */
-    public Map<Long,SchedulerResponse> unScheduleTaskByTaskIds(List<Long> taskIds);
+    public SchedulerResponse<Map<Long,Boolean>> unScheduleTaskByTaskIds(List<Long> taskIds);
 
     /**
      * run a task right now, task info is defined in runTaskDto
@@ -60,6 +60,6 @@ public interface TaskScheduleApi {
      */
     public SchedulerResponse runTaskNow(TaskInfoDto runTaskDto);
 
-
+    public SchedulerResponse<Map<Long,Boolean>> test();
 
 }

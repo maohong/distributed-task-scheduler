@@ -1,6 +1,10 @@
 package org.mh.dts.scheduler.server;
 
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.DefaultHandler;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 import java.io.File;
@@ -30,10 +34,26 @@ public class Main {
         server.join();
     }
 
+    public void start2() throws Exception{
+        server = new Server(8080);
+
+        ResourceHandler resourceHandler = new ResourceHandler();
+        resourceHandler.setDirectoriesListed(true);
+        resourceHandler.setResourceBase("/Users");
+        resourceHandler.setStylesheet("");
+
+        HandlerList handlers = new HandlerList();
+        handlers.setHandlers(new Handler[] { resourceHandler, new DefaultHandler() });
+        server.setHandler(handlers);
+
+        server.start();
+        server.join();
+    }
+
     public static void main(String [] args) throws Exception {
 
         Main jettyDaemon = new Main();
-        jettyDaemon.start();
+        jettyDaemon.start2();
 
     }
 

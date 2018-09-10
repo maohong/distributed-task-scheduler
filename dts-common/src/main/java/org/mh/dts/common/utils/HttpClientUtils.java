@@ -19,8 +19,9 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
 import org.mh.dts.common.constant.HttpRequestParamName;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLException;
 import java.io.IOException;
@@ -35,7 +36,7 @@ import java.util.concurrent.TimeUnit;
  */
 public final class HttpClientUtils {
 
-    private static final Logger logger = Logger.getLogger(HttpClientUtils.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(HttpClientUtils.class.getName());
     private static final RequestConfig DEFAULT_REQUEST_CONFIG = RequestConfig.custom().setConnectTimeout(2000).setSocketTimeout(5000).build();
     private static final List<Integer> INVALID_HTTP_CODES = Arrays.asList(new Integer[]{Integer.valueOf(403), Integer.valueOf(404), Integer.valueOf(499), Integer.valueOf(500), Integer.valueOf(502)});
     private static final PoolingHttpClientConnectionManager POOLING_CONNECTION_MANAGER = new PoolingHttpClientConnectionManager();

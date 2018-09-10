@@ -12,10 +12,7 @@ import org.springframework.beans.factory.InitializingBean;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by maohong on 2016/12/24.
@@ -68,9 +65,11 @@ public class SchdeulerClientForWeb implements InitializingBean {
                 Class rtnClazz = method.getReturnType();
                 HttpRequestBuilder requestBuilder = HttpRequestBuilder.create();
                 requestBuilder.setApiMethod(method.getName());
-                for (int i=0; i<args.length; i++) {
-                    // add args
-                    requestBuilder.addApiParameter(i, JsonUtils.toJsonString(args[i]));
+                if (args != null) {
+                    for (int i = 0; i < args.length; i++) {
+                        // add args
+                        requestBuilder.addApiParameter(i, JsonUtils.toJsonString(args[i]));
+                    }
                 }
                 String response = HttpClientUtils.post(apiPaths.get(index), requestBuilder.build(), null, token);
                 Object obj = JsonUtils.readObject(response, rtnClazz);
@@ -140,4 +139,15 @@ public class SchdeulerClientForWeb implements InitializingBean {
         return (TaskScheduleApi) apiClient.getService("/taskSchedule.do", TaskScheduleApi.class);
     }
 
+    public static void main(String [] args) {
+
+        SchdeulerClientForWeb client = new SchdeulerClientForWeb();
+        List<String> urls = Arrays.asList(new String[]{"http://localhost:9090"});
+        client.schedulerUrls = urls;
+        client.apiSecret = "dev";
+        client.clientName = "test";
+
+        client.getTaskScheduleApi().test();
+
+    }
 }

@@ -38,6 +38,14 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring.version>2.5.6</spring.version>
         <jetty.version>9.2.16.v20160414</jetty.version>
+        <jackson.version>2.6.1</jackson.version>
+        <commons.lang3.version>3.5</commons.lang3.version>
+        <commons.io.version>2.5</commons.io.version>
+        <guava.version>20.0</guava.version>
+        <logback.version>1.1.7</logback.version>
+        <slf4j.api.version>1.7.22</slf4j.api.version>
+        <commons.validator.version>1.5.0</commons.validator.version>
+        <google.gson.version>2.8.0</google.gson.version>
     </properties>
 
     <build>
@@ -166,6 +174,11 @@
             <artifactId>jetty-webapp</artifactId>
             <version>${jetty.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-jsp-2.1</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
 
 
         <!--db-->
@@ -221,19 +234,19 @@
 
         <!--log-->
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-        </dependency>
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.12</version>
+            <version>${slf4j.api.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.12</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
         </dependency>
 
         <!--quartz-->

@@ -52,9 +52,11 @@ public class Main {
 
     public static void main(String [] args) throws Exception {
 
-        Main jettyDaemon = new Main();
-        jettyDaemon.start2();
+//        Main jettyDaemon = new Main();
+//        jettyDaemon.start2();
 
+        JettyWebServer server = new JettyWebServer();
+        server.startJetty();
     }
 
 }
